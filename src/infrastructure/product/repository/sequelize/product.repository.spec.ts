@@ -94,5 +94,18 @@ describe("Product repository test", () => {
 
     expect(products).toEqual(foundProducts);    
   });
+
+  it("should delete a product", async () => {
+    const productRepository = new ProductRepository();
+    const product = new Product("1", "Product 1", 100);
+
+    await productRepository.create(product);
+
+    await productRepository.delete("1");
+
+    const productModel = await ProductModel.findOne({ where: { id: "1" } });
+
+    expect(productModel).toBeNull();
+  });
   
 });
